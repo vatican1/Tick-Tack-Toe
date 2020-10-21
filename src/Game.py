@@ -1,5 +1,7 @@
 class Game:
-    def __init__(self):
+    def __init__(self, player1, player2):
+        self.player1 = player1
+        self.player2 = player2
         self.turn = 1
         self.fieldArray = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
         self.endGame = False
@@ -9,14 +11,17 @@ class Game:
 
     def get_turn(self):
         if self.turn == 1:
-            print("Ходят крестики")
+            print(self.player1 + " ходит крестиками")
         else:
-            print("Ходят нолики")
+            print(self.player2 + " ходит ноликами")
 
     def cheat_move(self, x_or_zero, cord_x, cord_y):  # 1 - крестики, 2 - нолики
         self.fieldArray[cord_x][cord_y] = x_or_zero
 
     def move(self, cord_x, cord_y):
+        if 0 > cord_x or 0 > cord_y or cord_x > 3 or cord_y > 3:
+            print("Сюда нельзя ходить")
+            return
         if self.endGame:
             print("Игра окончена")
             return
@@ -62,7 +67,7 @@ class Game:
                 self.endGame = True
 
 
-game = Game()
+game = Game('Лупа', 'Пупа')
 while not game.endGame:
     x, y = input().split(' ')
     game.move(int(x) - 1, int(y) - 1)
